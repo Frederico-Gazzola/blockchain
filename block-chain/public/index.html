@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,11 @@
     <style>
         * {
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
-            background-color: #f4f4f9;
+            background-color: #eaeff2;
             margin: 0;
             padding: 0;
             display: flex;
@@ -21,99 +22,114 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
-            padding: 20px;
+            padding: 25px;
             background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
             text-align: center;
         }
 
         h1 {
-            color: #333;
-            font-size: 2em;
-            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 1em;
         }
 
         .section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f9f9fb;
-            border-radius: 8px;
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f1f5f8;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
         h2 {
-            color: #444;
-            font-size: 1.5em;
-            margin-bottom: 15px;
+            color: #34495e;
+            font-size: 1.6em;
+            margin-bottom: 20px;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: #ecf0f1;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #3498db;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 1em;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
         }
 
-        .certificate-info, .certificates-list {
+        .certificate-info,
+        .certificates-list {
             text-align: left;
-            margin-top: 15px;
-            padding: 10px;
-            border-top: 1px solid #ddd;
+            margin-top: 20px;
+            padding: 15px;
+            border-top: 1px solid #dcdde1;
         }
 
         .certificates-list p {
-            margin: 5px 0;
+            margin: 8px 0;
+            padding-left: 10px;
+            font-size: 1em;
+            color: #2d3436;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>Certificado Blockchain</h1>
+        <h1>Certificado em Blockchain</h1>
 
         <div class="section">
-            <h2>Lista de Certificados</h2>
-            <button onclick="loadCertificates()">Atualizar Lista de Certificados</button>
+            <h2>Certificados Disponíveis</h2>
+            <button onclick="loadCertificates()">Carregar Certificados</button>
             <div id="certificates-list" class="certificates-list"></div>
         </div>
 
         <div class="section">
-            <h2>Registrar Certificado</h2>
-            <input type="text" id="register-id" placeholder="ID do Certificado">
-            <input type="text" id="register-studentName" placeholder="Nome do Aluno">
-            <input type="text" id="register-course" placeholder="Curso">
+            <h2>Cadastrar Novo Certificado</h2>
+            <input type="text" id="register-id" placeholder="Número do Certificado">
+            <input type="text" id="register-studentName" placeholder="Nome do Estudante">
+            <input type="text" id="register-course" placeholder="Nome do Curso">
             <input type="text" id="register-issueDate" placeholder="Data de Emissão">
-            <button onclick="registerCertificate()">Registrar Certificado</button>
+            <button onclick="registerCertificate()">Salvar Certificado</button>
         </div>
 
         <div class="section">
-            <h2>Consultar Certificado</h2>
-            <input type="text" id="get-id" placeholder="ID do Certificado">
-            <button onclick="getCertificate()">Consultar Certificado</button>
+            <h2>Verificar Certificado</h2>
+            <input type="text" id="get-id" placeholder="Número do Certificado">
+            <button onclick="getCertificate()">Ver Certificado</button>
             <div id="certificate-info" class="certificate-info"></div>
         </div>
 
         <div class="section">
-            <h2>Revogar Certificado</h2>
-            <input type="text" id="revoke-id" placeholder="ID do Certificado">
-            <button onclick="revokeCertificate()">Revogar Certificado</button>
+            <h2>Cancelar Certificado</h2>
+            <input type="text" id="revoke-id" placeholder="Número do Certificado">
+            <button onclick="revokeCertificate()">Cancelar Certificado</button>
         </div>
 
     </div>
@@ -149,12 +165,12 @@
                 alert(data.error);
             } else {
                 document.getElementById('certificate-info').innerHTML = `
-                    <h3>Informações do Certificado:</h3>
-                    <p>ID: ${data.id}</p>
-                    <p>Nome do Aluno: ${data.studentName}</p>
+                    <h3>Detalhes do Certificado:</h3>
+                    <p>Número: ${data.id}</p>
+                    <p>Estudante: ${data.studentName}</p>
                     <p>Curso: ${data.course}</p>
-                    <p>Data de Emissão: ${data.issueDate}</p>
-                    <p>Válido: ${data.isValid ? "Sim" : "Não"}</p>
+                    <p>Emitido em: ${data.issueDate}</p>
+                    <p>Status: ${data.isValid ? "Ativo" : "Cancelado"}</p>
                 `;
             }
         }
@@ -180,7 +196,7 @@
             certificatesList.innerHTML = '<h3>Certificados Registrados</h3>';
             certificates.forEach(cert => {
                 certificatesList.innerHTML += `
-                    <p>ID: ${cert.id} --> Válido: ${cert.isValid ? "Sim" : "Não"}</p>
+                    <p>Número: ${cert.id} --> Status: ${cert.isValid ? "Ativo" : "Cancelado"}</p>
                 `;
             });
         }
@@ -188,4 +204,5 @@
         window.onload = loadCertificates;
     </script>
 </body>
+
 </html>

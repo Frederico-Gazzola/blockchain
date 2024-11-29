@@ -16,7 +16,7 @@ const networkId = "5777";
 const contratoAddress = networks[networkId]?.address;
 
 if (!contratoAddress) {
-    throw new Error(`Contrato não implantado na rede especificada (networkId: ${networkId}).`);
+    throw new Error(`Contrato não foi implantado na rede especificada (networkId: ${networkId}).`);
 }
 
 const contrato = new web3.eth.Contract(abi, contratoAddress);
@@ -37,7 +37,7 @@ app.post('/certificate', async (req, res) => {
         if (action === 'register') {
             await contrato.methods.registerCertificate(id, studentName, course, issueDate)
                 .send({ from: accounts[0], gas: 500000 });
-            res.json({ message: 'Certificado registrado com sucesso!' });
+            res.json({ message: 'Certificado foi registrado com sucesso' });
         } else if (action === 'get') {
             const certificate = await contrato.methods.getCertificate(id).call();
             const result = stringifyBigInt({
@@ -51,12 +51,12 @@ app.post('/certificate', async (req, res) => {
         } else if (action === 'revoke') {
             await contrato.methods.revokeCertificate(id)
                 .send({ from: accounts[0], gas: 500000 });
-            res.json({ message: 'Certificado revogado com sucesso!' });
+            res.json({ message: 'Certificado foi revogado com sucesso' });
         } else {
-            res.status(400).json({ error: 'Ação inválida.' });
+            res.status(400).json({ error: 'Ação é inválida.' });
         }
     } catch (error) {
-        console.error("Erro ao executar ação:", error);
+        console.error("Erro executando a ação:", error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -68,14 +68,14 @@ app.get('/certificates', async (req, res) => {
             ids.map(async (id) => {
                 const certificate = await contrato.methods.getCertificate(id).call();
                 return {
-                    id: certificate[0].toString(), 
-                    isValid: certificate[4]         
+                    id: certificate[0].toString(),
+                    isValid: certificate[4]
                 };
             })
         );
         res.json(certificates);
     } catch (error) {
-        console.error("Erro ao listar certificados:", error);
+        console.error("Erro listando os certificados:", error);
         res.status(500).json({ error: error.message });
     }
 });
